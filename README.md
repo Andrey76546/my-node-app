@@ -1,47 +1,42 @@
-# Лабораторная работа 3. Node.js Pipeline
+# Лабораторная работа 3. Node.js CI pipeline
 
-## Цель
+## Цель работы
 
-Настроить непрерывную интеграцию Node.js-приложения: ESLint, тесты Jest в нескольких версиях Node.js и сборку Docker-образа без публикации.
+Настроить непрерывную интеграцию Node.js-приложения: ESLint, тесты Jest в нескольких поддерживаемых версиях Node.js и сборку Docker-образа без публикации.
 
-## Структура
+## Что сделано
 
-- `src/index.js` — функция `add()` и запуск приложения.
-- `tests/index.test.js` — три теста Jest.
-- `package.json` и `package-lock.json` — зависимости и воспроизводимая установка через `npm ci`.
-- `.eslintrc.json` — конфигурация ESLint.
-- `Dockerfile` — контейнер приложения на Node.js 18 Alpine.
-- [ci-nodejs.yml](.github/workflows/ci-nodejs.yml) — workflow GitHub Actions.
+- Workflow [`ci-nodejs.yml`](.github/workflows/ci-nodejs.yml) запускается для `push`, `pull_request` и вручную.
+- Матрица проверяет Node.js `22.x`, `24.x` и `26.x` на `ubuntu-24.04`.
+- Для каждой версии выполняются воспроизводимая установка `npm ci`, ESLint и три теста Jest.
+- После успешного завершения всей матрицы отдельная задача собирает Docker-образ.
+- Docker job выполняется при любом поддерживаемом типе запуска и не пропускается из-за фильтра события.
+- Минимальная версия проекта — Node.js 22, а Docker-образ основан на `node:24-alpine`.
 
-## Локальная проверка
+## Как запускать / проверять
+
+Локальная проверка:
 
 ```bash
 npm ci
 npm run lint
 npm test
-```
-
-Ожидаемый результат: три успешно пройденных теста и отсутствие ошибок ESLint.
-
-Локальная проверка выполнена успешно: ESLint не обнаружил ошибок, все три теста Jest пройдены.
-
-## Docker
-
-```bash
 docker build -t my-node-app:test .
 docker run --rm my-node-app:test
 ```
 
-Контейнер выводит `Hello from Node.js app!`. Образ собирается только для проверки и никуда не публикуется.
+В GitHub откройте вкладку **Actions** и выберите **Node.js CI**. Успешный запуск должен содержать три зелёные задачи матрицы и зелёную задачу **Build Docker image (no push)**.
 
-Локальная сборка и запуск контейнера завершились успешно; ожидаемое сообщение получено.
+## Результат выполнения
 
-## CI
+[Node.js CI #4](https://github.com/Andrey76546/my-node-app/actions/runs/39559423610) завершён со статусом **Success**: Node.js `22.x`, `24.x`, `26.x`, ESLint, Jest и сборка Docker-образа прошли успешно (4 из 4 jobs).
 
-Workflow выполняет `npm ci`, линтинг и тесты на Node.js 18, 20 и 22. После успешных проверок отдельная задача собирает Docker-образ. Результаты доступны на странице [Node.js CI](https://github.com/Andrey76546/my-node-app/actions/workflows/ci-nodejs.yml).
+## Скриншот
 
-## Скриншот выполнения
+![Успешный запуск Node.js CI с матрицей и Docker build](screenshots/node-ci.png)
 
-[Запуск Node.js CI #1](https://github.com/Andrey76546/my-node-app/actions/runs/39518808109) завершён успешно: пройдены три задания матрицы Node.js и сборка Docker-образа.
+## Ссылка на workflow / Actions
 
-![Успешный запуск Node.js CI](screenshots/actions-success.png)
+- [Файл workflow](.github/workflows/ci-nodejs.yml)
+- [Все запуски Node.js CI](https://github.com/Andrey76546/my-node-app/actions/workflows/ci-nodejs.yml)
+- [Подтверждённый успешный запуск](https://github.com/Andrey76546/my-node-app/actions/runs/39559423610)
