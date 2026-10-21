@@ -37,6 +37,10 @@ Hello from Node.js app!
 
 Для самостоятельной проверки выполните `npm start` из корня репозитория или запустите собранный контейнер командой `docker run --rm my-node-app:test`.
 
+## Скриншот локального выполнения
+
+![Локальный запуск Node.js-приложения](screenshots/node-output.png)
+
 ## Результат выполнения
 
 [Node.js CI #4](https://github.com/Andrey76546/my-node-app/actions/runs/39559423610) завершён со статусом **Success**: Node.js `22.x`, `24.x`, `26.x`, ESLint, Jest и сборка Docker-образа прошли успешно (4 из 4 jobs).
