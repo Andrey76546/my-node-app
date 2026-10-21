@@ -42,4 +42,6 @@ Workflow выполняет `npm ci`, линтинг и тесты на Node.js 
 
 ## Скриншот выполнения
 
-Подтверждение успешного запуска будет добавлено после первой онлайн-проверки.
+[Запуск Node.js CI #1](https://github.com/Andrey76546/my-node-app/actions/runs/39518808109) завершён успешно: пройдены три задания матрицы Node.js и сборка Docker-образа.
+
+![Успешный запуск Node.js CI](screenshots/actions-success.png)
