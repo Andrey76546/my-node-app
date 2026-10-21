@@ -27,6 +27,16 @@ docker run --rm my-node-app:test
 
 В GitHub откройте вкладку **Actions** и выберите **Node.js CI**. Успешный запуск должен содержать три зелёные задачи матрицы и зелёную задачу **Build Docker image (no push)**.
 
+## Результат выполнения программы
+
+Приложение запущено командой `node src/index.js` (эквивалент `npm start`). Реальный консольный вывод, полученный при завершении с кодом `0`:
+
+```text
+Hello from Node.js app!
+```
+
+Для самостоятельной проверки выполните `npm start` из корня репозитория или запустите собранный контейнер командой `docker run --rm my-node-app:test`.
+
 ## Результат выполнения
 
 [Node.js CI #4](https://github.com/Andrey76546/my-node-app/actions/runs/39559423610) завершён со статусом **Success**: Node.js `22.x`, `24.x`, `26.x`, ESLint, Jest и сборка Docker-образа прошли успешно (4 из 4 jobs).
